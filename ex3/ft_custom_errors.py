@@ -15,15 +15,12 @@ class WaterError(GardenError):
         super().__init__(message)
 
 
-def garden_operations(pattern) -> None:
+def garden_operations(pattern: str) -> None:
     if (pattern == "PlantError"):
         raise PlantError("The tomato plant is wilting!")
     elif (pattern == "Water"):
         raise WaterError("Not enough water in the tank!")
-    elif (pattern == "all"):
-        return open("42")
-    print("Operation completed successfully")
-    return (pattern)
+    return
 
 
 def test_custom() -> None:
@@ -31,16 +28,27 @@ def test_custom() -> None:
 
         if (pattern == "all"):
             print("Testing catching all garden errors...")
+            for error in ("PlantError", "Water"):
+                try:
+                    garden_operations(error)
+                except GardenError as e:
+                    print(f"Caught WaterError: {e}")
+
         else:
             print(f"Testing {pattern}Error...")
-
         try:
             garden_operations(pattern)
-        except:
-            pass
+        except (
+            PlantError,
+            WaterError,
+        ) as e:
+            print(f"Caught PlantError: {e}")
+        print()
 
+    print("All custom error types work correctly!")
 
 
 if __name__ == "__main__":
     print("=== Custom Garden Errors Demo ===")
-
+    print()
+    test_custom()
